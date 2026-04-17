@@ -35,7 +35,6 @@ export async function getUploadSasUrl(): Promise<UploadSasUrlResponse> {
   const result: UploadSasUrlResponse = await response.json();
   return result;
 }
-
 export async function uploadVideoToBlob(videoFile: File, uploadSasUrl: string, userId: string): Promise<void> {
   const response = await fetch(uploadSasUrl, {
     method: 'PUT',
