@@ -99,13 +99,19 @@ export function useFileHandler() {
       console.log('📤 Sending PUT request to blob storage...');
       if(uploadSasUrlResponse?.uploadSasUrl) {
         const response = await fetch(uploadSasUrlResponse?.uploadSasUrl, {
-          method: 'PUT',
-          body: file,
-          headers: {
-            'x-ms-blob-type': 'BlockBlob',
-            'x-ms-meta-userId': uploadSasUrlResponse?.userId,
-          },
-        });
+  method: 'PUT',
+  body: file,
+  headers: {
+    'x-ms-blob-type': 'BlockBlob',
+    // Custom Metadata Headers
+    'x-ms-meta-UserId': "test-user",
+    'x-ms-meta-VideoId': "8af5aac8-ec58-46bf-828e-04bbf0f580b3", // Ensure this is a string
+    'x-ms-meta-SessionId': "6bd200a1-f98f-43f1-ab2a-b7122d77f171",
+    'x-ms-meta-CreatedAt': new Date().toISOString(), // Standard date string
+    'x-ms-meta-OrderNumber': "1",
+    'x-ms-meta-IsFull': "false",
+  },
+});
         setIsLoading(false);
         console.log('📤 Response received:', response);
         if (!response.ok) {
